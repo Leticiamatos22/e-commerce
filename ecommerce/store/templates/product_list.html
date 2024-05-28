@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MyEcommerce</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .product {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .product h2 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Produtos</h1>
+    <div id="products"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/api/items/')
+                .then(response => response.json())
+                .then(data => {
+                    const productContainer = document.getElementById('products');
+                    data.forEach(item => {
+                        const productElement = document.createElement('div');
+                        productElement.classList.add('product');
+                        productElement.innerHTML = `
+                            <h2>${item.name}</h2>
+                            <p>${item.description}</p>
+                            <p>Preço: R$ ${item.price}</p>
+                            <p>Estoque: ${item.stock}</p>
+                        `;
+                        productContainer.appendChild(productElement);
+                    });
+                });
+        });
+    </script>
+</body>
+</html>
